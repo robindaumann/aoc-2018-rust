@@ -1,9 +1,13 @@
+extern crate aoc;
+
+use aoc::file_to_vec;
 use std::collections::HashSet;
-use std::fs::File;
-use std::io::{BufRead, BufReader, Error};
+use std::io::Error;
 
 fn main() {
-    let res = read().unwrap();
+    let path = "input/01.txt";
+    let lines = file_to_vec(path).unwrap();
+    let res = read(&lines).unwrap();
 
     println!("Sum: {}", res.0);
     match res.1 {
@@ -12,19 +16,16 @@ fn main() {
     }
 }
 
-fn read() -> Result<(i64, Option<i64>), Error> {
-    let f = File::open("input/01.txt")?;
-    let f = BufReader::new(f);
-
+fn read(lines: &Vec<String>) -> Result<(i64, Option<i64>), Error> {
     let mut set = HashSet::new();
     let mut sum = 0;
     set.insert(sum);
     let mut seen = None;
-    for line in f.lines() {
+    for line in lines {
         if set.contains(&sum) {
             seen = Some(sum);
         }
-        let num: i64 = line?.parse().expect("Could not parse!");
+        let num: i64 = line.parse().expect("Could not parse!");
         sum += num;
         set.insert(sum);
     }

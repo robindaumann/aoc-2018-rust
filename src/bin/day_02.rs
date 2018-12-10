@@ -1,15 +1,17 @@
+extern crate aoc;
+
+use aoc::file_to_vec;
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::{BufRead, BufReader, Error};
+use std::io::Error;
 
 fn main() {
-    let res = calc_checksum().unwrap();
-
+    let lines = file_to_vec("input/02.txt").unwrap();
+    // Task 1
+    let res = calc_checksum(&lines).unwrap();
     println!("Checksum: {}", res);
 
-    let lines = read_to_vec().unwrap();
-    let res = find_same(lines);
-
+    // Task 2
+    let res = find_same(&lines);
     match res {
         None => println!("No common pair"),
         Some(x) => {
@@ -19,9 +21,9 @@ fn main() {
     }
 }
 
-fn find_same(lines: Vec<String>) -> Option<String> {
-    for line in &lines {
-        for sec in &lines {
+fn find_same(lines: &Vec<String>) -> Option<String> {
+    for line in lines {
+        for sec in lines {
             if sec == line {
                 continue;
             }
@@ -42,24 +44,14 @@ fn comp(line: &String, other: &String) -> String {
         }
     }
     res
-} 
-
-fn read_to_vec() -> Result<Vec<String>, Error> {
-    let f = File::open("input/02.txt")?;
-    let f = BufReader::new(f);
-
-    f.lines().collect()
 }
 
-fn calc_checksum() -> Result<u64, Error> {
-    let f = File::open("input/02.txt")?;
-    let f = BufReader::new(f);
-
+fn calc_checksum(lines: &Vec<String>) -> Result<u64, Error> {
     let mut threes = 0;
     let mut twos = 0;
-    for line in f.lines() {
+    for line in lines {
         let mut cs = HashMap::new();
-        for c in line?.chars() {
+        for c in line.chars() {
             let count = cs.entry(c).or_insert(0);
             *count += 1;
         }
