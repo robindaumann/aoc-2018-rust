@@ -21,7 +21,7 @@ fn main() {
     }
 }
 
-fn find_same(lines: &Vec<String>) -> Option<String> {
+fn find_same(lines: &[String]) -> Option<String> {
     for line in lines {
         for sec in lines {
             if sec == line {
@@ -36,7 +36,7 @@ fn find_same(lines: &Vec<String>) -> Option<String> {
     None
 }
 
-fn comp(line: &String, other: &String) -> String {
+fn comp(line: &str, other: &str) -> String {
     let mut res = String::new();
     for(c1, c2) in line.chars().zip(other.chars()) {
         if c1 == c2 {
@@ -46,7 +46,7 @@ fn comp(line: &String, other: &String) -> String {
     res
 }
 
-fn calc_checksum(lines: &Vec<String>) -> Result<u64, Error> {
+fn calc_checksum(lines: &[String]) -> Result<u64, Error> {
     let mut threes = 0;
     let mut twos = 0;
     for line in lines {

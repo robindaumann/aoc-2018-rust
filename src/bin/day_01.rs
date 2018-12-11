@@ -16,7 +16,7 @@ fn main() {
     }
 }
 
-fn read(lines: &Vec<String>) -> Result<(i64, Option<i64>), Error> {
+fn read(lines: &[String]) -> Result<(i64, Option<i64>), Error> {
     let mut set = HashSet::new();
     let mut sum = 0;
     set.insert(sum);

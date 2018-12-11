@@ -32,7 +32,7 @@ fn main() {
     println!("Overlaps: {}", square);
 }
 
-fn create_set(claims: &Vec<Rect>) -> HashSet<u64> {
+fn create_set(claims: &[Rect]) -> HashSet<u64> {
     let mut res = HashSet::new();
     for claim in claims {
         res.insert(claim.id);
@@ -55,17 +55,17 @@ fn count_overlaps (fabric: Vec<Vec<Vec<&Rect>>>, set: &mut HashSet<u64>) -> u64 
     count
 }
 
-fn fill_fabric<'a>(fabric: &mut Vec<Vec<Vec<&'a Rect>>>, claims: &'a Vec<Rect>) {
+fn fill_fabric<'a>(fabric: &mut Vec<Vec<Vec<&'a Rect>>>, claims: &'a [Rect]) {
     for claim in claims {
-        for xx in claim.x..claim.x+claim.dx {
-            for yy in claim.y..claim.y+claim.dy {
-                fabric[xx][yy].push(claim);
+        for xx in fabric.iter_mut().skip(claim.x).take(claim.dx) {
+            for yy in xx.iter_mut().skip(claim.y).take(claim.dy) {
+                yy.push(claim);
             }
         }
     }
 }
 
-fn create_fabric(claims: &Vec<Rect>) -> Vec<Vec<Vec<&Rect>>> {
+fn create_fabric(claims: &[Rect]) -> Vec<Vec<Vec<&Rect>>> {
     let mut xmax = 0;
     let mut ymax = 0;
 
