@@ -9,4 +9,4 @@ You can run one solution with
 
 ```
 cargo run --bin day_{number}
-``
+```
