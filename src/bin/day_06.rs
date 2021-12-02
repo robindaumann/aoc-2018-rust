@@ -33,7 +33,7 @@ struct Point {
 
 impl Point {
     fn dist(&self, x: usize, y: usize) -> i64 {
-        ((self.x as i64 - x as i64).abs() + (self.y as i64 - y as i64).abs())
+        (self.x as i64 - x as i64).abs() + (self.y as i64 - y as i64).abs()
     }
 }
 
